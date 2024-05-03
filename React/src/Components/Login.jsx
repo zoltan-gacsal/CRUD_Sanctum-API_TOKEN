@@ -1,5 +1,6 @@
 import FloatingLabel from "react-bootstrap/FloatingLabel";
 import Form from "react-bootstrap/Form";
+import Button from 'react-bootstrap/Button';
 
 const Login = () => {
     return (
@@ -13,20 +14,24 @@ const Login = () => {
                                     Login
                                 </h3>
                             </div>
-                            <div className="card-body">
+                            <form className="card-body">
 
                                 <div className="mb-3">
-                                    <FloatingLabel controlId="floatingInput" label="Email" className="mb-3">
+                                    <FloatingLabel controlId="floatingEmail" label="Email" className="mb-3">
                                         <Form.Control type="email" placeholder="email" name="email"/>
                                     </FloatingLabel>
                                 </div>
                                 <div className="mb-3">
-                                    <FloatingLabel controlId="floatingInput" label="Password" className="mb-3">
+                                    <FloatingLabel controlId="floatingPassword" label="Password" className="mb-3">
                                         <Form.Control type="password" placeholder="password" name="password"/>
                                     </FloatingLabel>
                                 </div>
 
-                            </div>
+                                <div className="mb-3 d-grid">
+                                    <Button variant="secondary" size="md">Login</Button>
+                                </div>
+
+                            </form>
                         </div>
                     </div>
                 </div>
