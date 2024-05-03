@@ -5,6 +5,9 @@ import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import { toast } from 'react-toastify';
 import Button from 'react-bootstrap/Button';
+import InputErrors from "../ErrorsField/InputErrors";
+import SpinnerLoader from "../Spinner/Spinner";
+
 
 
 const Register = () => {
@@ -17,7 +20,7 @@ const Register = () => {
     const navigate = useNavigate();
 
 
-    const handleChange = async (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
         setErrors(null)
         setLoading(true)
@@ -25,7 +28,7 @@ const Register = () => {
 
         try {
 
-            const response = await axios.post('', data)
+            const response = await axios.post('http://127.0.0.1:8000/api/user/register', data)
             setLoading(false)
             setName("")
             setEmail("")
@@ -44,6 +47,8 @@ const Register = () => {
     }
 
 
+
+
     return (
         <div>
             <div className="container">
@@ -55,21 +60,24 @@ const Register = () => {
                                     Registration
                                 </h3>
                             </div>
-                            <form className="card-body" onSubmit={handleChange}>
+                            <form className="card-body" onSubmit={handleSubmit}>
                                 <div className="mb-3">
                                     <FloatingLabel controlId="floatingName" label="Name" className="mb-3">
-                                        <Form.Control type="name" placeholder="name" name="name"/>
+                                        <Form.Control type="name" placeholder="name" name="name" onChange={(e)=>{setName(e.target.value)}} value={name}/>
                                     </FloatingLabel>
+                                    {InputErrors(errors, 'name')}
                                 </div>
                                 <div className="mb-3">
                                     <FloatingLabel controlId="floatingEmail" label="Email" className="mb-3">
                                         <Form.Control type="email" placeholder="email" name="email"/>
                                     </FloatingLabel>
+                                    {InputErrors(errors, 'email')}
                                 </div>
                                 <div className="mb-3">
                                     <FloatingLabel controlId="floatingPassword" label="Password" className="mb-3">
-                                        <Form.Control type="password" placeholder="password" name="password"/>
+                                        <Form.Control type="password" placeholder="password" name="password" onChange={(e)=>{setPassword(e.target.value)}} value={password}/>
                                     </FloatingLabel>
+                                    {InputErrors(errors, 'password')}
                                 </div>
                                 <div className="mb-3">
                                     <FloatingLabel controlId="floatingPasswordConfirmation" label="Password Confirmation" className="mb-3">
@@ -78,7 +86,13 @@ const Register = () => {
                                 </div>
 
                                 <div className="mb-3 d-grid">
-                                    <Button variant="secondary" size="lg">Registration</Button>
+
+                                    { loading ?
+                                        <SpinnerLoader /> 
+                                    :
+                                        <Button variant="secondary" size="lg" type="submit">Registration</Button>
+                                    }
+
                                 </div>
                             </form>
                         </div>
